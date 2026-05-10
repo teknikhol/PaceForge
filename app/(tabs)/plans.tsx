@@ -1,23 +1,18 @@
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Colors } from '@/constants/theme';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useColorScheme } from 'nativewind';
 import { ScrollView, StyleSheet, View } from 'react-native';
+
+import { ScreenShell } from '@/components/screen-shell';
+import { ThemedText } from '@/components/themed-text';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function PlansScreen() {
   const { colorScheme } = useColorScheme();
-  const theme = Colors[colorScheme ?? 'light'];
+  const theme = Colors[colorScheme];
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor: theme.background }]}>
-      <View style={styles.header}>
-        <ThemedText type="title">Training Plans</ThemedText>
-        <ThemedText style={{ color: theme.icon }}>Choose your next milestone</ThemedText>
-      </View>
-      
+    <ScreenShell title="Training Plans" subtitle="Choose your next milestone">
       <ScrollView contentContainerStyle={styles.content}>
-        {/* Placeholder for a Plan Card */}
         <View style={[styles.planCard, { backgroundColor: theme.surface }]}>
           <MaterialIcons name="directions-run" size={32} color={theme.tint} />
           <View style={styles.planInfo}>
@@ -27,14 +22,12 @@ export default function PlansScreen() {
           <MaterialIcons name="chevron-right" size={24} color={theme.icon} />
         </View>
       </ScrollView>
-    </ThemedView>
+    </ScreenShell>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, paddingTop: 60 },
-  header: { paddingHorizontal: 20, marginBottom: 20 },
-  content: { paddingHorizontal: 20 },
+  content: { paddingHorizontal: 4, paddingBottom: 24 },
   planCard: {
     flexDirection: 'row',
     alignItems: 'center',

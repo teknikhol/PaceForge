@@ -1,24 +1,14 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
-import { useColorScheme } from 'nativewind';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 export default function RootLayout() {
-  // 1. Destructure with a fallback to avoid the "next of undefined" error
-  const { colorScheme } = useColorScheme() ?? { colorScheme: 'light' };
-  
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    setIsReady(true);
-  }, []);
-
-  if (!isReady) return null;
+  const { colorScheme } = useColorScheme();
 
   const currentTheme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;
   const gluestackMode = (colorScheme as "light" | "dark") || "light";
