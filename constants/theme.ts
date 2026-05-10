@@ -5,49 +5,44 @@
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
-
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: '#0F172A',         // Deep charcoal (Better readability than pure black)
+    background: '#F8FAFC',   // Soft off-white (Reduces eye strain)
+    tint: '#2962FF',         // Electric Blue (Focus & Trust)
+    icon: '#64748B',
+    tabIconDefault: '#64748B',
+    tabIconSelected: '#2962FF',
+    // New Semantic Colors
+    surface: '#FFFFFF',      // Pure white for cards
+    cardSecondary: '#E0E7FF', // Light blue tint for the "Motivation" box
+    accent: '#EA580C',       // Burnt Orange (Dopamine/Energy)
+    success: '#16A34A',
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: '#F1F5F9',         // Off-white
+    background: '#0F1113',   // Deep slate (Easier on eyes than pure #000)
+    tint: '#76FF03',         // Volt Green (Action/Alertness)
+    icon: '#94A3B8',
+    tabIconDefault: '#94A3B8',
+    tabIconSelected: '#76FF03',
+    // New Semantic Colors
+    surface: '#1A1C1E',      // Elevation 1 background
+    cardSecondary: '#24292E', // Subtle contrast for motivation cards
+    accent: '#FB923C',       // Warm orange
+    success: '#4ADE80',
   },
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
+    sans: 'System',          // San Francisco is highly athletic/modern
+    rounded: 'ui-rounded',   // Great for a "friendly coach" feel
+  },
+  android: {
+    sans: 'Roboto',
   },
   default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
+    sans: 'sans-serif',
+  }
 });

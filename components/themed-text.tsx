@@ -1,4 +1,4 @@
-import { StyleSheet, Text, type TextProps } from 'react-native';
+import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/use-theme-color';
 
@@ -46,11 +46,16 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    lineHeight: 32,
+    // Increased from 32 to 40 to allow descenders (g, p, q, y) to show
+    lineHeight: Platform.OS === 'ios' ? 38 : 40,
+    // Android specific: prevents extra padding at the top/bottom
+    includeFontPadding: false,
   },
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    // Adding a slight lineHeight boost here too for safety
+    lineHeight: 28,
   },
   link: {
     lineHeight: 30,
