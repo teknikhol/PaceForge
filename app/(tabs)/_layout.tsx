@@ -61,9 +61,9 @@ export default function TabLayout() {
         }}
       />
 
-      {/* Routine or Activity Tab */}
+      {/* History Tab */}
       <Tabs.Screen
-        name="activity"
+        name="history"
         options={{
           title: 'HISTORY',
           tabBarIcon: ({ color }) => (
