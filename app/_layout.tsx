@@ -30,6 +30,14 @@ export default function RootLayout() {
               headerShown: false, // We use our custom header inside modal.tsx
             }} 
           />
+          <Stack.Screen
+            name="active-run"
+            options={{
+              presentation: 'fullScreenModal',
+              animation: 'slide_from_bottom',
+              headerShown: false,
+            }}
+          />
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>

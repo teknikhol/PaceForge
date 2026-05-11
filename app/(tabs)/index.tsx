@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { ScrollView } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -51,7 +52,7 @@ export default function DashboardScreen() {
         <DashboardRecentRuns theme={theme} runs={dashboardMockRecentRuns} />
       </ScrollView>
 
-      <DashboardStartRunFab theme={theme} isDark={isDark} onPress={() => console.log('Starting Workout')} />
+      <DashboardStartRunFab theme={theme} isDark={isDark} onPress={() => router.push('/active-run')} />
     </ThemedView>
   );
 }

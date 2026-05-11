@@ -30,6 +30,13 @@
     "plugins": [
       "expo-router",
       [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "PaceForge uses your location to show your route, pace, distance, and speed during workouts.",
+          "locationAlwaysAndWhenInUsePermission": "PaceForge uses your location to track workouts while the app is open."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
