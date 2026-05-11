@@ -28,6 +28,10 @@ export function useActiveRunTracking() {
 
   const onLocation = useCallback((loc: Location.LocationObject) => {
     const { latitude, longitude, accuracy, speed } = loc.coords;
+    
+    // Filter out 0,0 coordinates (invalid GPS data)
+    if (latitude === 0 && longitude === 0) return;
+    
     const pt: LatLng = { latitude, longitude };
     
     currentCoordRef.current = pt;

@@ -12,6 +12,7 @@ import { Colors } from '@/constants/theme';
 import { useActiveRunTracking } from '@/hooks/use-active-run-tracking';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { formatDistanceDisplay, formatDistanceUnit, formatDurationClock, formatPace, formatSpeed, type UnitSystem } from '@/lib/run-formatting';
+import { RunStorage } from '@/lib/run-storage';
 
 export default function ActiveRunScreen() {
   const insets = useSafeAreaInsets();
@@ -41,7 +42,20 @@ export default function ActiveRunScreen() {
     setShowStopConfirm(false);
     void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     stopWatch();
-    router.back();
+    
+    // Debug logging before saving
+    console.log('ActiveRun - Saving route with', route.length, 'coordinates');
+    console.log('ActiveRun - Distance:', distanceMeters, 'Time:', elapsedActiveSeconds);
+    
+    // Save route to storage and navigate with only distance/time as params
+    RunStorage.setLastRunRoute(route);
+    router.push({
+      pathname: '/run-summary',
+      params: {
+        distanceMeters: distanceMeters.toString(),
+        elapsedActiveSeconds: elapsedActiveSeconds.toString(),
+      },
+    });
   };
 
   const cancelEndRun = () => {
