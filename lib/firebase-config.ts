@@ -1,6 +1,8 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
+// @ts-ignore: getReactNativePersistence is only available in the native bundle, which TS may not resolve correctly
+import { Auth, getAuth, getReactNativePersistence, initializeAuth } from 'firebase/auth';
+import { Firestore, getFirestore, initializeFirestore, memoryLocalCache } from 'firebase/firestore';
 
 // Firebase configuration using environment variables
 const firebaseConfig = {
@@ -14,10 +16,38 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+const isAppInitialized = getApps().length > 0;
+const app: FirebaseApp = !isAppInitialized ? initializeApp(firebaseConfig) : getApp();
 
 // Initialize Firebase services
-export const auth = firebase.auth();
-export const db = firebase.firestore();
+// We use try/catch blocks to handle HMR re-initialization in development
+let firebaseAuth: Auth;
+if (isAppInitialized) {
+  firebaseAuth = getAuth(app);
+} else {
+  try {
+    firebaseAuth = initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage)
+    });
+  } catch (error) {
+    firebaseAuth = getAuth(app);
+  }
+}
 
-export default firebase;
+let firestoreDb: Firestore;
+if (isAppInitialized) {
+  firestoreDb = getFirestore(app);
+} else {
+  try {
+    firestoreDb = initializeFirestore(app, {
+      localCache: memoryLocalCache({})
+    });
+  } catch (error) {
+    firestoreDb = getFirestore(app);
+  }
+}
+
+export const auth = firebaseAuth;
+export const db = firestoreDb;
+
+export default app;

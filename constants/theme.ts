@@ -17,6 +17,7 @@ export const Colors = {
     surface: '#FFFFFF',      // Pure white for cards
     cardSecondary: '#E0E7FF', // Light blue tint for the "Motivation" box
     accent: '#EA580C',       // Burnt Orange (Dopamine/Energy)
+    error: '#DC2626',        // Red for validation errors
     success: '#16A34A',
   },
   dark: {
@@ -30,6 +31,7 @@ export const Colors = {
     surface: '#1A1C1E',      // Elevation 1 background
     cardSecondary: '#24292E', // Subtle contrast for motivation cards
     accent: '#FB923C',       // Warm orange
+    error: '#EF4444',        // Red for validation errors
     success: '#4ADE80',
   },
 };

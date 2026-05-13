@@ -238,7 +238,7 @@ export default function ActiveRunScreen() {
 
       {/* STATS DASHBOARD */}
       {(phase === 'active' || phase === 'paused') && (
-        <View style={[styles.dashboardContainer, { paddingBottom: insets.bottom}]}>
+        <View style={[styles.dashboardContainer, { paddingBottom: insets.bottom + 12 }]}>
           <LinearGradient 
             colors={isDark ? ['#1A1A1A', '#000'] : ['#FFF', '#F9F9F9']} 
             style={styles.dashboardCard}

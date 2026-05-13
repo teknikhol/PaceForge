@@ -30,7 +30,11 @@ export function DashboardHeader({
     <View style={[dashboardStyles.header, { paddingTop }]}>
       <View style={{ flex: 1 }}>
         <View style={dashboardStyles.greetingRow}>
-          <ThemedText style={[dashboardStyles.greetingText, { color: theme.text }]}>
+          <ThemedText 
+            numberOfLines={2} 
+            ellipsizeMode="tail"
+            style={[dashboardStyles.greetingText, { color: theme.text, flex: 1, marginRight: 8 }]}
+          >
             {greeting}, {userName}!
           </ThemedText>
           <View
@@ -38,6 +42,7 @@ export function DashboardHeader({
               dashboardStyles.streakBadge,
               {
                 backgroundColor: isDark ? 'rgba(118, 255, 3, 0.1)' : 'rgba(234, 88, 12, 0.1)',
+                marginLeft: 'auto',
               },
             ]}>
             <ThemedText style={[dashboardStyles.streakText, { color: theme.accent }]}>
@@ -48,14 +53,16 @@ export function DashboardHeader({
         <ThemedText style={[dashboardStyles.headerSubtitle, { color: theme.icon }]}>{subtitle}</ThemedText>
       </View>
 
-      <View style={dashboardStyles.headerActions}>
+      <View style={[dashboardStyles.headerActions, { marginLeft: 16 }]}>
         <Pressable
           onPress={() => router.push('/modal')}
           style={({ pressed }) => [
             dashboardStyles.profileButton,
             { borderColor: theme.tint, opacity: pressed ? 0.7 : 1 },
           ]}>
-          <ThemedText style={[dashboardStyles.avatarText, { color: theme.text }]}>A</ThemedText>
+          <ThemedText style={[dashboardStyles.avatarText, { color: theme.text }]}>
+            {(userName || 'R').charAt(0).toUpperCase()}
+          </ThemedText>
         </Pressable>
       </View>
     </View>

@@ -123,7 +123,7 @@ export default function RunSummaryScreen() {
       <View style={styles.bottomSection}>
         <LinearGradient 
           colors={isDark ? ['#1A1A1A', '#000'] : ['#FFF', '#F2F2F2']} 
-          style={[styles.statsCard, { paddingBottom: insets.bottom + 20 }]}
+          style={[styles.statsCard, { paddingBottom: insets.bottom + 40 }]}
         >
           <View style={styles.statsGrid}>
             <View style={styles.statItem}>
