@@ -16,7 +16,6 @@ import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import {
-  dashboardMockInsight,
   dashboardMockRecentRuns,
   dashboardMockTodayStats,
   dashboardMockTrendData,
@@ -24,6 +23,8 @@ import {
   getGreeting
 } from '@/lib/dashboard-data';
 import { auth, db } from '@/lib/firebase-config';
+import { HistoryStorage } from '@/lib/history-storage';
+import { getDynamicMotivation, type DynamicInsight } from '@/lib/motivation-service';
 import { UnitSystem } from '@/lib/run-formatting';
 import { fetchWeather } from '@/lib/weather-service';
 import { doc, getDoc } from 'firebase/firestore';
@@ -35,6 +36,11 @@ export default function DashboardScreen() {
   const theme = Colors[colorScheme];
   const [userName, setUserName] = useState('Runner');
   const [weatherSubtitle, setWeatherSubtitle] = useState('Checking the sky... ☁️');
+  const [dynamicInsight, setDynamicInsight] = useState<DynamicInsight>({
+    title: "Forging...",
+    message: "Analyzing your recent strikes...",
+    icon: "hammer-outline"
+  });
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -47,6 +53,9 @@ export default function DashboardScreen() {
         
         // Start loading weather immediately with cached units or default
         loadWeather(cachedUnits || 'metric');
+        
+        // Initial motivation load
+        refreshMotivation(cachedName || 'Runner');
 
         // 2. Sync with Firestore to ensure data is up to date
         const docRef = doc(db, 'users', auth.currentUser.uid);
@@ -54,6 +63,7 @@ export default function DashboardScreen() {
         if (docSnap.exists()) {
           const data = docSnap.data();
           setUserName(data.firstName || 'Runner');
+          refreshMotivation(data.firstName || 'Runner');
           await AsyncStorage.setItem(`user_name_${auth.currentUser.uid}`, data.firstName);
           
           // If units changed in Firestore, refresh weather to match
@@ -87,6 +97,13 @@ export default function DashboardScreen() {
       }
     };
 
+    const refreshMotivation = async (name: string) => {
+      // Use the correct method name from HistoryStorage
+      const history = await HistoryStorage.getAllRuns();
+      const insight = getDynamicMotivation(name, history, dashboardMockWeekStats.streak);
+      setDynamicInsight(insight);
+    };
+
     loadProfile();
   }, []);
 
@@ -103,7 +120,7 @@ export default function DashboardScreen() {
       />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={dashboardStyles.scrollContent}>
-        <DashboardMotivation theme={theme} isDark={isDark} insight={dashboardMockInsight} />
+        <DashboardMotivation theme={theme} isDark={isDark} insight={dynamicInsight} />
         <DashboardTodayStats
           theme={theme}
           distance={dashboardMockTodayStats.distance}
